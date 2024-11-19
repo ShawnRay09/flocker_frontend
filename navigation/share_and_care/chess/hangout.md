@@ -14,101 +14,155 @@ authors: Ahaan, Xavier, Spencer, Vasanth
     <style>
       /* General Styles */
       body {
-        background-color: #f7dc6f;
-        color: #f0f0f0;
-        font-family: Arial, sans-serif;
+        background-color: #2c3e50; /* Dark background for modern look */
+        color: #ecf0f1; /* Lighter text color for contrast */
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
         min-height: 100vh;
+        margin: 0;
+        padding: 0;
       }
+      
       .container {
         text-align: center;
         margin-top: 20px;
+        width: 100%;
+        max-width: 1200px;
+        padding: 20px;
       }
+
       h2 {
-        color: #333;
+        color: #e67e22;
+        font-size: 2em;
+        margin-bottom: 10px;
       }
-      .game-mode {
-        margin-bottom: 20px;
-      }
+
+      /* Buttons */
       .btn {
-        padding: 10px 20px;
-        margin: 5px;
+        padding: 12px 24px;
+        margin: 10px;
         cursor: pointer;
-        background-color: #444;
-        color: #f0f0f0;
+        background-color: #2980b9;
+        color: #ecf0f1;
         border: none;
-        border-radius: 5px;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
       }
+      
       .btn:hover {
-        background-color: #555;
+        background-color: #3498db;
       }
+
+      /* Chessboard */
       .chessboard {
         display: grid;
-        grid-template-columns: repeat(8, 60px);
-        grid-template-rows: repeat(8, 60px);
-        border: 2px solid #444;
-        margin: 20px auto;
-        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+        grid-template-columns: repeat(8, 70px);
+        grid-template-rows: repeat(8, 70px);
+        border: 3px solid #34495e;
+        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
       }
+      
       .chessboard div {
-        width: 60px;
-        height: 60px;
+        width: 70px;
+        height: 70px;
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 30px;
+        font-size: 32px;
         font-weight: bold;
         cursor: pointer;
       }
+      
       .yellow {
-        background-color: #f7dc6f;
+        background-color: #f7c6a5;
       }
+      
       .orange {
-        background-color: #f39c12;
+        background-color: #e67e22;
       }
+
+      /* Piece Colors */
+      .white-piece {
+        color: #f0f0f0; /* White pieces */
+      }
+      
+      .black-piece {
+        color: #333; /* Black pieces */
+      }
+
+      /* Chat Container */
       .chat-container {
         display: flex;
         justify-content: space-between;
         width: 100%;
         max-width: 1200px;
+        gap: 20px;
+        margin-top: 20px;
       }
+      
       .chat-box {
-        width: 40%;
-        background-color: #1a1a1a;
+        width: 45%;
+        background-color: #34495e;
         padding: 20px;
-        border-radius: 8px;
-        border: 2px solid #444;
+        border-radius: 12px;
+        border: 2px solid #2c3e50;
         box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
       }
+
       .chat-messages {
         height: 300px;
         overflow-y: auto;
-        background-color: #1b1b1b;
-        padding: 10px;
+        background-color: #2c3e50;
+        padding: 12px;
         border-radius: 10px;
-        border: 2px solid #444;
+        border: 2px solid #34495e;
       }
+      
       .message {
-        margin: 5px 0;
-        padding: 5px;
-        font-size: 14px;
-        color: #f0f0f0;
+        margin: 8px 0;
+        padding: 8px;
+        font-size: 15px;
+        color: #ecf0f1;
+        border-radius: 10px;
       }
+      
       .message.user-message {
-        background-color: #444;
-        border-radius: 15px;
+        background-color: #2980b9;
         text-align: right;
       }
+      
       .message.bot-message {
-        background-color: #b29800;
-        border-radius: 15px;
+        background-color: #e67e22;
         text-align: left;
       }
+      
       .channel-select {
-        margin: 10px 0;
+        margin: 15px 0;
+      }
+      
+      .message-input {
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+      }
+      
+      .message-input input[type="text"] {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #34495e;
+        border-radius: 8px;
+        background-color: #2c3e50;
+        color: #ecf0f1;
+        font-size: 16px;
+        margin-right: 10px;
+      }
+
+      .message-input input[type="text"]::placeholder {
+        color: #95a5a6;
       }
     </style>
   </head>
@@ -186,6 +240,14 @@ authors: Ahaan, Xavier, Spencer, Vasanth
             const square = document.createElement("div");
             square.classList.add((rowIndex + colIndex) % 2 === 0 ? "yellow" : "orange");
             square.textContent = pieces[piece] || "";
+            
+            // Apply the color class based on piece case
+            if (piece === piece.toUpperCase()) {
+              square.classList.add("white-piece"); // White pieces (uppercase)
+            } else if (piece === piece.toLowerCase()) {
+              square.classList.add("black-piece"); // Black pieces (lowercase)
+            }
+            
             square.addEventListener("click", () => selectSquare(rowIndex, colIndex));
             chessboard.appendChild(square);
           });
@@ -257,12 +319,16 @@ authors: Ahaan, Xavier, Spencer, Vasanth
   </body>
 </html>
 
+
+
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Group Posts</title>
+    <title>Create Post with Group Selection</title>
     <style>
+        /* Container and form styling */
         .container {
             display: flex;
             justify-content: center;
@@ -285,13 +351,22 @@ authors: Ahaan, Xavier, Spencer, Vasanth
         .form-container label {
             margin-bottom: 5px;
         }
-        .form-container input, .form-container textarea, .form-container select {
+        /* Style for the dropdown */
+        .form-container select {
             margin-bottom: 10px;
             padding: 10px;
             border-radius: 5px;
             border: none;
             width: 100%;
+            background-color: #34495e;
+            color: #ecf0f1;
+            font-size: 16px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            outline: none;
         }
+        /* Button styling */
         .form-container button {
             padding: 10px;
             border-radius: 5px;
@@ -300,162 +375,100 @@ authors: Ahaan, Xavier, Spencer, Vasanth
             color: #ecf0f1;
             cursor: pointer;
         }
-        .post-item {
-            background-color: #34495e;
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            color: #ecf0f1;
-        }
     </style>
 </head>
 <body>
-
-<div class="container">
-    <div class="form-container">
-        <h2>Add New Post</h2>
-        <form id="postForm">
-            <label for="title">Title:</label>
-            <input type="text" id="title" name="title" required>
-            <label for="content">Content:</label>
-            <textarea id="content" name="content" required></textarea>
-            <label for="group_id">Group:</label>
-            <select id="group_id" name="group_id" required>
-                <option value="">Select a group</option>
-            </select>
-            <button type="submit">Add Post</button>
-        </form>
+    <div class="container">
+        <div class="form-container">
+            <h2>Select Group and Create Post</h2>
+            <form id="postForm">
+                <label for="group_id">Group:</label>
+                <select id="group_id" name="group_id" required>
+                    <option value="">Select a group</option>
+                </select>
+                
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required>
+                
+                <label for="content">Content:</label>
+                <textarea id="content" name="content" required></textarea>
+                
+                <button type="submit">Add Post</button>
+            </form>
+            <div id="details"></div>
+        </div>
     </div>
-</div>
 
-<div id="count"></div>
-<div id="details"></div>
-
-<script type="module">
-    import { pythonURI, fetchOptions } from '{{ site.baseurl }}/assets/js/api/config.js';
-
-    // URL to fetch all posts
-     const pythonURI = "https://flocker.nighthawkcodingsociety.com";
-    const postApiUrl = `${pythonURI}/api/post`;
-
-    // Fetch groups for dropdown selection
-    async function fetchGroups() {
-        try {
-            const response = await fetch(`${pythonURI}/api/group`, fetchOptions);
-            if (!response.ok) {
-                throw new Error('Failed to fetch groups: ' + response.statusText);
+    <script type="module">
+        // Import server URI and standard fetch options
+        const pythonURI = "https://flocker.nighthawkcodingsociety.com";
+        const fetchOptions = {
+            headers: {
+                'Authorization': 'Bearer YOUR_AUTH_TOKEN' // Replace with actual auth token if required
             }
-            const groups = await response.json();
-            const groupSelect = document.getElementById('group_id');
-            
-            // Clear the group dropdown
-            groupSelect.innerHTML = '<option value="">Select a group</option>';
-
-            groups.forEach(group => {
-                const option = document.createElement('option');
-                option.value = group.id;
-                option.textContent = group.name;
-                groupSelect.appendChild(option);
-            });
-
-            // Add event listener for group selection
-            groupSelect.addEventListener('change', (event) => {
-                const selectedGroupId = event.target.value;
-                if (selectedGroupId) {
-                    fetchGroupPosts(selectedGroupId);
-                } else {
-                    document.getElementById('details').innerHTML = ''; // Clear posts if no group selected
-                }
-            });
-        } catch (error) {
-            console.error('Error fetching groups:', error);
-        }
-    }
-
-    // Function to fetch and display posts of a selected group
-    async function fetchGroupPosts(groupId) {
-        try {
-            const response = await fetch(`${postApiUrl}?group_id=${groupId}`, fetchOptions);
-
-            if (!response.ok) {
-                throw new Error('Failed to fetch posts for selected group: ' + response.statusText);
-            }
-
-            const postData = await response.json();
-
-            // Count the total posts and display it
-            const postCount = postData.length || 0;
-            document.getElementById('count').innerHTML = `<h2>Post Count: ${postCount}</h2>`;
-
-            // Display posts in the details div
-            const detailsDiv = document.getElementById('details');
-            detailsDiv.innerHTML = ''; // Clear previous posts
-
-            // Iterate over postData and create HTML elements for each item
-            postData.forEach(postItem => {
-                const postElement = document.createElement('div');
-                postElement.className = 'post-item';
-                postElement.innerHTML = `
-                    <h3>${postItem.title}</h3>
-                    <p><strong>Group:</strong> ${postItem.group_name}</p>
-                    <p><strong>User:</strong> ${postItem.user_name}</p>
-                    <p>${postItem.content}</p>
-                `;
-                detailsDiv.appendChild(postElement);
-            });
-
-        } catch (error) {
-            console.error('Error fetching group posts:', error);
-        }
-    }
-
-    // Handle form submission
-    document.getElementById('postForm').addEventListener('submit', async function(event) {
-        event.preventDefault(); // Prevent default form submission
-
-        const title = document.getElementById('title').value;
-        const content = document.getElementById('content').value;
-        const group_id = document.getElementById('group_id').value;
-
-        const postData = {
-            title: title,
-            content: content,
-            group_id: group_id
         };
 
-        try {
-            const response = await fetch(postApiUrl, {
-                ...fetchOptions,
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(postData)
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to add post: ' + response.statusText);
+        // Function to fetch groups for dropdown selection
+        async function fetchGroups() {
+            try {
+                const response = await fetch(`${pythonURI}/api/groups`, fetchOptions);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch groups: ' + response.statusText);
+                }
+                const groups = await response.json();
+                const groupSelect = document.getElementById('group_id');
+                groups.forEach(group => {
+                    const option = document.createElement('option');
+                    option.value = group.id;
+                    option.textContent = group.name;
+                    groupSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error fetching groups:', error);
             }
-
-            alert('Post added successfully!');
-            document.getElementById('postForm').reset();
-
-            // Refresh posts for the selected group after adding a new post
-            if (group_id) {
-                fetchGroupPosts(group_id);
-            }
-        } catch (error) {
-            console.error('Error adding post:', error);
-            alert('Error adding post: ' + error.message);
         }
-    });
 
-    // Fetch groups when the page loads
-    fetchGroups();
-</script>
+        // Handle form submission
+        document.getElementById('postForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
 
+            // Extract data from form
+            const title = document.getElementById('title').value;
+            const content = document.getElementById('content').value;
+            const group_id = document.getElementById('group_id').value;
+
+            // Create API payload
+            const postData = {
+                title: title,
+                content: content,
+                group_id: group_id
+            };
+
+            try {
+                // Send POST request to backend to add the new post
+                const response = await fetch(`${pythonURI}/api/post`, {
+                    ...fetchOptions,
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(postData)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to add post: ' + response.statusText);
+                }
+
+                alert('Post added successfully!');
+                document.getElementById('postForm').reset();
+            } catch (error) {
+                console.error('Error adding post:', error);
+                alert('Error adding post: ' + error.message);
+            }
+        });
+
+        // Fetch groups when the page loads
+        fetchGroups();
+    </script>
 </body>
 </html>
-
-
-
